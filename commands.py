@@ -44,10 +44,11 @@ def Donald():
 def Help():
   return (GetRobotEmoji() +
          " *Väf-bot versio " + version + "*" + GetRobotEmoji() +
-         "\n\n*Komennot:*\n/subit\tSubilista"
-         "\n/inside\tInsideläppä\n"
+         "\n\n*Komennot:*\n/subit\tSubilista\n"
+         "/inside\tInsideläppä\n"
          "/matti\tOppia profeetalta\n"
-         "/donald\tDon't stump the Trump")
+         "/donald\tDon't stump the Trump\n\n"
+         "GitHub repo\thttps://git.io/v7VKt")
 
 def ReadUrlAndGetContents(url):
   response = urllib2.urlopen(url)
