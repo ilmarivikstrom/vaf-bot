@@ -8,36 +8,34 @@ import telepot
 
 import commands
 
-def CheckReceivedMessage(message):
-  chatID = GetChatID(message)
-  givenCommand = GetGivenCommand(message)
+def CheckReceivedMessage(newMessageData):
+  messageText = GetMessageText(newMessageData)
   
-  if StartsWithSlash(givenCommand):
-    if givenCommand == '/subit':
+  if StartsWithSlash(messageText):
+    chatID = GetChatID(newMessageData)
+    
+    if messageText == '/subit':
       SendMessageWithStyles(chatID, commands.Subway())
-    elif givenCommand == '/inside':
+    elif messageText == '/inside':
       SendMessageWithStyles(chatID, commands.Inside())
-    elif givenCommand == '/matti':
+    elif messageText == '/matti':
       SendMessageWithStyles(chatID, commands.Matti())
-    elif givenCommand == '/donald':
+    elif messageText == '/donald':
       SendMessageWithStyles(chatID, commands.Donald())
-    elif givenCommand == '/help' or givenCommand == '/apua':
+    elif messageText == '/help' or messageText == '/apua':
       SendMessageWithStyles(chatID, commands.Help())
 
-def GetChatID(message):
-  return message['chat']['id']
+def GetChatID(newMessageData):
+  return newMessageData['chat']['id']
 
-def GetGivenCommand(message):
-  return message['text']
+def GetMessageText(newMessageData):
+  return newMessageData['text']
 
-def StartsWithSlash(message):
-  if(message[0] == '/'):
+def StartsWithSlash(newMessageData):
+  if(newMessageData[0] == '/'):
     return True
   else:
     return False
-
-def SendMessageWithoutStyles(chatID, messageToBeSent):
-  bot.sendMessage(chatID, messageToBeSent)
 
 def SendMessageWithStyles(chatID, messageToBeSent):
   bot.sendMessage(chatID, messageToBeSent, "Markdown")

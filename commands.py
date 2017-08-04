@@ -42,7 +42,8 @@ def Donald():
   return quote
 
 def Help():
-  return (GetRobotEmoji() + " *Väf-bot versio " + version + "*" + GetRobotEmoji() +
+  return (GetRobotEmoji() +
+         " *Väf-bot versio " + version + "*" + GetRobotEmoji() +
          "\n\n*Komennot:*\n/subit\tSubilista"
          "\n/inside\tInsideläppä\n"
          "/matti\tOppia profeetalta\n"
