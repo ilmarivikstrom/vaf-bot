@@ -6,11 +6,9 @@ import time
 import datetime
 import json
 import urllib2
+import feedparser
 
-version = "0.3.1"
-
-def Clock():
-  return str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+version = "0.4"
 
 def Subway():
   currentDay = datetime.datetime.today().weekday()
@@ -41,14 +39,45 @@ def Donald():
   quote = ParseQuote(line, "Donald Trump")
   return quote
 
+def ThesisEvents():
+  feed = UrlToRSSFeed("http://aalto.fi/fi/current/events/rss.xml")
+ 
+  allThesesString = "*Aloitus yleisesti klo 12*\n\n"
+
+  for event in feed[ 'items' ]:
+    if EventIsThesis(event):
+      if EventInCity(event, "Espoo"):
+        thesisString = GetThesisInfo(event)
+        allThesesString += thesisString
+
+  return allThesesString
+        
 def Help():
   return (GetRobotEmoji() +
-         " *Väf-bot versio " + version + "*" + GetRobotEmoji() +
+         " *Väf-bot versio " + version + "* " + GetRobotEmoji() +
          "\n\n*Komennot:*\n/subit\tSubilista\n"
          "/inside\tInsideläppä\n"
          "/matti\tOppia profeetalta\n"
-         "/donald\tDon't stump the Trump\n\n"
+         "/donald\tDon't stump the Trump\n"
+         "/kahvit\tVäitöstilaisuudet Niemessä\n\n"
          "GitHub repo\thttps://git.io/v7VKt")
+
+def GetThesisInfo(event):
+  address = (event[ 'xcal_x-calconnect-venue_adr_x-calconnect-street' ] + ", " +
+             event[ 'xcal_x-calconnect-venue_adr_x-calconnect-city' ])
+  return event[ 'title' ] + "\n" + address + "\n\n"
+
+def EventIsThesis(event):
+  if event[ 'category' ] == u'Väitökset':
+    return True
+  else:
+    return False
+
+def EventInCity(event, city):
+  if event[ 'xcal_x-calconnect-venue_adr_x-calconnect-city' ] == city:
+    return True
+  else:
+    return False
 
 def ReadUrlAndGetContents(url):
   response = urllib2.urlopen(url)
@@ -69,3 +98,7 @@ def ParseQuote(line, name=None):
 
 def GetRobotEmoji():
   return "\xF0\x9F\xA4\x96"
+
+def UrlToRSSFeed(url):
+  return feedparser.parse(url)
+

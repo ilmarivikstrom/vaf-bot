@@ -22,6 +22,8 @@ def CheckReceivedMessage(newMessageData):
       SendMessageWithStyles(chatID, commands.Matti())
     elif messageText == '/donald':
       SendMessageWithStyles(chatID, commands.Donald())
+    elif messageText == '/kahvit':
+      SendMessageWithStyles(chatID, commands.ThesisEvents())
     elif messageText == '/help' or messageText == '/apua':
       SendMessageWithStyles(chatID, commands.Help())
 
