@@ -3,10 +3,11 @@
 
 import sys
 import time
+
 import ConfigParser
 import telepot
 
-import commands
+import cmds
 
 def CheckReceivedMessage(newMessageData):
   messageText = GetMessageText(newMessageData)
@@ -15,17 +16,17 @@ def CheckReceivedMessage(newMessageData):
     chatID = GetChatID(newMessageData)
     
     if messageText == '/subit':
-      SendMessageWithStyles(chatID, commands.Subway())
+      SendMessageWithStyles(chatID, cmds.Subway())
     elif messageText == '/inside':
-      SendMessageWithStyles(chatID, commands.Inside())
+      SendMessageWithStyles(chatID, cmds.Inside())
     elif messageText == '/matti':
-      SendMessageWithStyles(chatID, commands.Matti())
+      SendMessageWithStyles(chatID, cmds.Matti())
     elif messageText == '/donald':
-      SendMessageWithStyles(chatID, commands.Donald())
+      SendMessageWithStyles(chatID, cmds.Donald())
     elif messageText == '/kahvit':
-      SendMessageWithStyles(chatID, commands.ThesisEvents())
+      SendMessageWithStyles(chatID, cmds.Kahvit())
     elif messageText == '/help' or messageText == '/apua':
-      SendMessageWithStyles(chatID, commands.Help())
+      SendMessageWithStyles(chatID, cmds.Help())
 
 def GetChatID(newMessageData):
   return newMessageData['chat']['id']
