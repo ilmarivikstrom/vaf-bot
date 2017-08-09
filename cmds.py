@@ -1,14 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import random
-import time
 import datetime
-import json
-import urllib2
-import feedparser
+import time
 
-version = "0.4"
+import utils
 
 def Subway():
   currentDay = datetime.datetime.today().weekday()
@@ -25,22 +21,22 @@ def Subway():
   return subwayMessage
 
 def Inside():
-  line = GetRandomLineOfFile('res/inside.txt')
-  quote = ParseQuote(line)
+  line = utils.GetRandomLineOfFile('res/inside.txt')
+  quote = utils.ParseQuote(line)
   return quote
 
 def Matti():
-  line = GetRandomLineOfFile('res/matti.txt')
-  quote = ParseQuote(line, "Profeetta Nykänen")
+  line = utils.GetRandomLineOfFile('res/matti.txt')
+  quote = utils.ParseQuote(line, "Profeetta Nykänen")
   return quote
 
 def Donald():
-  line = ReadUrlAndGetContents("https://api.whatdoestrumpthink.com/api/v1/quotes/random")
-  quote = ParseQuote(line, "Donald Trump")
+  line = utils.ReadURLAndGetContents("https://api.whatdoestrumpthink.com/api/v1/quotes/random")
+  quote = utils.ParseQuote(line, "Donald Trump")
   return quote
 
-def ThesisEvents():
-  feed = UrlToRSSFeed("http://aalto.fi/fi/current/events/rss.xml")
+def Kahvit():
+  feed = utils.URLToRSSFeed("http://aalto.fi/fi/current/events/rss.xml")
  
   allThesesString = "*Aloitus yleisesti klo 12*\n\n"
 
@@ -53,8 +49,8 @@ def ThesisEvents():
   return allThesesString
         
 def Help():
-  return (GetRobotEmoji() +
-         " *Väf-bot versio " + version + "* " + GetRobotEmoji() +
+  return (utils.GetRobotEmoji() +
+         " *Väf-bot versio " + utils.GetVersion() + "* " + utils.GetRobotEmoji() +
          "\n\n*Komennot:*\n/subit\tSubilista\n"
          "/inside\tInsideläppä\n"
          "/matti\tOppia profeetalta\n"
@@ -79,26 +75,4 @@ def EventInCity(event, city):
   else:
     return False
 
-def ReadUrlAndGetContents(url):
-  response = urllib2.urlopen(url)
-  data = response.read()
-  values = json.loads(data)
-  return values["message"]
-
-def GetRandomLineOfFile(file):
-  lines = open(file, 'r').read().splitlines()
-  return random.choice(lines)
-
-def ParseQuote(line, name=None):
-  if(name==None):
-    parts = line.split(';');
-    return "_\"" + parts[0] + "\"_" + "  *-" + parts[1] + "*"
-  else:
-    return "_\"" + line + "\"_" + "  *-" + name + "*"
-
-def GetRobotEmoji():
-  return "\xF0\x9F\xA4\x96"
-
-def UrlToRSSFeed(url):
-  return feedparser.parse(url)
 
