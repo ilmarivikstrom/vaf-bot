@@ -37,7 +37,10 @@ def Donald():
 
 def Kahvit():
   feed = utils.URLToRSSFeed("http://aalto.fi/fi/current/events/rss.xml")
- 
+
+  if not feed[ 'items' ]:
+    return "*Virhe: Ei vastausta Aallon APIsta*"
+
   allThesesString = "*Aloitus yleisesti klo 12*\n\n"
 
   for event in feed[ 'items' ]:
