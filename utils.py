@@ -20,7 +20,7 @@ def GetVersion():
 
 def ParseQuote(line, name=None):
   if(name==None):
-    parts = line.split(';');
+    parts = line.split(';')
     return "_\"" + parts[0] + "\"_" + "  *-" + parts[1] + "*"
   else:
     return "_\"" + line + "\"_" + "  *-" + name + "*"
