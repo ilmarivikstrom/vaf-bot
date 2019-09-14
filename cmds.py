@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import datetime
-import time
 
 import utils
 
@@ -35,47 +34,11 @@ def Donald():
   quote = utils.ParseQuote(line, "Donald Trump")
   return quote
 
-def Kahvit():
-  feed = utils.URLToRSSFeed("http://aalto.fi/fi/current/events/rss.xml")
-
-  if not feed[ 'items' ]:
-    return "*Virhe: Ei vastausta Aallon APIsta*"
-
-  allThesesString = "*Aloitus yleisesti klo 12*\n\n"
-
-  for event in feed[ 'items' ]:
-    if EventIsThesis(event):
-      if EventInCity(event, "Espoo"):
-        thesisString = GetThesisInfo(event)
-        allThesesString += thesisString
-
-  return allThesesString
-        
 def Help():
   return (utils.GetRobotEmoji() +
          " *Väf-bot versio " + utils.GetVersion() + "* " + utils.GetRobotEmoji() +
          "\n\n*Komennot:*\n/subit\tSubilista\n"
          "/inside\tInsideläppä\n"
          "/matti\tOppia profeetalta\n"
-         "/donald\tDon't stump the Trump\n"
-         "/kahvit\tVäitöstilaisuudet Niemessä\n\n"
+         "/donald\tDon't stump the Trump\n\n"
          "GitHub repo\thttps://git.io/v7VKt")
-
-def GetThesisInfo(event):
-  address = (event[ 'xcal_x-calconnect-venue_adr_x-calconnect-street' ] + ", " +
-             event[ 'xcal_x-calconnect-venue_adr_x-calconnect-city' ])
-  return event[ 'title' ] + "\n" + address + "\n\n"
-
-def EventIsThesis(event):
-  if event[ 'category' ] == u'Väitökset':
-    return True
-  else:
-    return False
-
-def EventInCity(event, city):
-  if event[ 'xcal_x-calconnect-venue_adr_x-calconnect-city' ] == city:
-    return True
-  else:
-    return False
-
-

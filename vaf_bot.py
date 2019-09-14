@@ -1,19 +1,20 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import sys
 import time
 
-import ConfigParser
 import telepot
 
 import cmds
+import utils
+from repository import Repository
 
 def CheckReceivedMessage(newMessageData):
-  messageText = GetMessageText(newMessageData)
-  
-  if StartsWithSlash(messageText):
-    chatID = GetChatID(newMessageData)
+  messageText = utils.GetMessageText(newMessageData)
+  repo.insert(newMessageData)
+
+  if utils.StartsWithSlash(messageText):
+    chatID = utils.GetChatID(newMessageData)
     
     if messageText == '/subit':
       SendMessageWithStyles(chatID, cmds.Subway())
@@ -23,30 +24,12 @@ def CheckReceivedMessage(newMessageData):
       SendMessageWithStyles(chatID, cmds.Matti())
     elif messageText == '/donald':
       SendMessageWithStyles(chatID, cmds.Donald())
-    elif messageText == '/kahvit':
-      SendMessageWithStyles(chatID, cmds.Kahvit())
     elif messageText == '/help' or messageText == '/apua':
       SendMessageWithStyles(chatID, cmds.Help())
 
-def GetChatID(newMessageData):
-  return newMessageData['chat']['id']
-
-def GetMessageText(newMessageData):
-  return newMessageData['text']
-
-def StartsWithSlash(newMessageData):
-  if(newMessageData[0] == '/'):
-    return True
-  else:
-    return False
 
 def SendMessageWithStyles(chatID, messageToBeSent):
   bot.sendMessage(chatID, messageToBeSent, "Markdown")
-
-def GetAPIKey():
-  config = ConfigParser.ConfigParser()
-  config.read("vaf_bot.ini")
-  return config.get('Credentials', 'API_KEY')
 
 def Main():
   bot.message_loop(CheckReceivedMessage)
@@ -54,5 +37,6 @@ def Main():
   while 1:
     time.sleep(10)
 
-bot = telepot.Bot(GetAPIKey())
+repo = Repository()
+bot = telepot.Bot(utils.GetAPIKey())
 Main()
