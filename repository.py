@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import json
 import ConfigParser
 import mysql.connector
 
@@ -20,6 +21,7 @@ class Repository:
 
 
     def insert(self, newMessageData):
+        print(json.dumps(newMessageData, indent=4, sort_keys=True))
         sql = "INSERT INTO received (chatfirst_name, chatid, chattype, chatusername, date, fromfirst_name, fromid, fromis_bot, fromlanguage_code, fromusername, message_id, text) VALUES " + utils.GetMessageValues(
             newMessageData)
         cursor = self.db.cursor()
