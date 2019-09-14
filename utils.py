@@ -3,7 +3,6 @@
 
 
 import ConfigParser
-import feedparser
 import json
 import random
 import urllib2
@@ -32,10 +31,6 @@ def ReadURLAndGetContents(url):
   data = response.read()
   values = json.loads(data)
   return values["message"]
-
-def URLToRSSFeed(url):
-  return feedparser.parse(url)
-
 
 def GetChatID(newMessageData):
   return newMessageData['chat']['id']
