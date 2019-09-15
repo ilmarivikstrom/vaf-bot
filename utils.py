@@ -5,99 +5,106 @@
 import ConfigParser
 import json
 import random
-import sys
 import urllib2
 
-version = "0.5"
+VERSION = "0.5"
 
-def GetRandomLineOfFile(file):
-  lines = open(file, 'r').read().splitlines()
-  return random.choice(lines)
 
-def GetRobotEmoji():
-  return "\xF0\x9F\xA4\x96"
+def get_random_line_of_file(file):
+    lines = open(file, 'r').read().splitlines()
+    return random.choice(lines)
 
-def GetVersion():
-  return version
 
-def ParseQuote(line, name=None):
-  if(name==None):
-    parts = line.split(';')
-    return "_\"" + parts[0] + "\"_" + "  *-" + parts[1] + "*"
-  else:
+def get_robot_emoji():
+    return "\xF0\x9F\xA4\x96"
+
+
+def get_version():
+    return VERSION
+
+
+def parse_quote(line, name=None):
+    if name is None:
+        parts = line.split(';')
+        return "_\"" + parts[0] + "\"_" + "  *-" + parts[1] + "*"
     return "_\"" + line + "\"_" + "  *-" + name + "*"
 
-def ReadURLAndGetContents(url):
-  response = urllib2.urlopen(url)
-  data = response.read()
-  values = json.loads(data)
-  return values["message"]
 
-def GetChatID(newMessageData):
-  return newMessageData['chat']['id']
+def read_url_and_get_contents(url):
+    response = urllib2.urlopen(url)
+    data = response.read()
+    values = json.loads(data)
+    return values["message"]
 
-def GetMessageText(newMessageData):
-  return newMessageData['text']
 
-def GetMessageValues(newMessageData):
-  values = "("
-  values += "\""
-  values += newMessageData['chat']['first_name']
-  values += "\""
-  values += ", "
-  values += "\""
-  values += str(newMessageData['chat']['id'])
-  values += "\""
-  values += ", "
-  values += "\""
-  values += newMessageData['chat']['type']
-  values += "\""
-  values += ", "
-  values += "\""
-  values += newMessageData['chat']['username']
-  values += "\""
-  values += ", "
-  values += "\""
-  values += str(newMessageData['date'])
-  values += "\""
-  values += ", "
-  values += "\""
-  values += newMessageData['from']['first_name']
-  values += "\""
-  values += ", "
-  values += "\""
-  values += str(newMessageData['from']['id'])
-  values += "\""
-  values += ", "
-  values += "\""
-  values += str(newMessageData['from']['is_bot'])
-  values += "\""
-  values += ", "
-  values += "\""
-  values += newMessageData['from']['language_code']
-  values += "\""
-  values += ", "
-  values += "\""
-  values += newMessageData['from']['username']
-  values += "\""
-  values += ", "
-  values += "\""
-  values += str(newMessageData['message_id'])
-  values += "\""
-  values += ", "
-  values += "\""
-  values += newMessageData['text']
-  values += "\""
-  values += ")"
-  return values
+def get_chat_id(new_message_data):
+    return new_message_data['chat']['id']
 
-def StartsWithSlash(newMessageData):
-  if(newMessageData[0] == '/'):
-    return True
-  else:
+
+def get_message_text(new_message_data):
+    return new_message_data['text']
+
+
+def get_message_values(new_message_data):
+    values = "("
+    values += "\""
+    values += new_message_data['chat']['first_name']
+    values += "\""
+    values += ", "
+    values += "\""
+    values += str(new_message_data['chat']['id'])
+    values += "\""
+    values += ", "
+    values += "\""
+    values += new_message_data['chat']['type']
+    values += "\""
+    values += ", "
+    values += "\""
+    values += new_message_data['chat']['username']
+    values += "\""
+    values += ", "
+    values += "\""
+    values += str(new_message_data['date'])
+    values += "\""
+    values += ", "
+    values += "\""
+    values += new_message_data['from']['first_name']
+    values += "\""
+    values += ", "
+    values += "\""
+    values += str(new_message_data['from']['id'])
+    values += "\""
+    values += ", "
+    values += "\""
+    values += str(new_message_data['from']['is_bot'])
+    values += "\""
+    values += ", "
+    values += "\""
+    values += new_message_data['from']['language_code']
+    values += "\""
+    values += ", "
+    values += "\""
+    values += new_message_data['from']['username']
+    values += "\""
+    values += ", "
+    values += "\""
+    values += str(new_message_data['message_id'])
+    values += "\""
+    values += ", "
+    values += "\""
+    values += new_message_data['text']
+    values += "\""
+    values += ")"
+    return values
+
+
+def starts_with_slash(new_message_data):
+    if (new_message_data[0] == '/'):
+        return True
     return False
 
-def GetConfigValueWithKey(key):
-  config = ConfigParser.ConfigParser()
-  config.read("vaf_bot.ini")
-  return config.get('Credentials', key)
+
+def get_config_value_with_key(key):
+    config = ConfigParser.ConfigParser()
+    config.read("vaf_bot.ini")
+    return config.get('Credentials', key)

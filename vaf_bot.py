@@ -9,34 +9,37 @@ import cmds
 import utils
 from repository import Repository
 
-def CheckReceivedMessage(newMessageData):
-  messageText = utils.GetMessageText(newMessageData)
-  repo.insert(newMessageData)
 
-  if utils.StartsWithSlash(messageText):
-    chatID = utils.GetChatID(newMessageData)
-    
-    if messageText == '/subit':
-      SendMessageWithStyles(chatID, cmds.Subway())
-    elif messageText == '/inside':
-      SendMessageWithStyles(chatID, cmds.Inside())
-    elif messageText == '/matti':
-      SendMessageWithStyles(chatID, cmds.Matti())
-    elif messageText == '/donald':
-      SendMessageWithStyles(chatID, cmds.Donald())
-    elif messageText == '/help' or messageText == '/apua':
-      SendMessageWithStyles(chatID, cmds.Help())
+def check_received_message(new_message_data):
+    message_text = utils.get_message_text(new_message_data)
+    repo.insert(new_message_data)
+
+    if utils.starts_with_slash(message_text):
+        chat_id = utils.get_chat_id(new_message_data)
+
+        if message_text == '/subit':
+            send_message_with_styles(chat_id, cmds.subway())
+        elif message_text == '/inside':
+            send_message_with_styles(chat_id, cmds.inside())
+        elif message_text == '/matti':
+            send_message_with_styles(chat_id, cmds.matti())
+        elif message_text == '/donald':
+            send_message_with_styles(chat_id, cmds.donald())
+        elif message_text == '/help' or message_text == '/apua':
+            send_message_with_styles(chat_id, cmds.help())
 
 
-def SendMessageWithStyles(chatID, messageToBeSent):
-  bot.sendMessage(chatID, messageToBeSent, "Markdown")
+def send_message_with_styles(chat_id, message_to_be_sent):
+    bot.sendMessage(chat_id, message_to_be_sent, "Markdown")
 
-def Main():
-  bot.message_loop(CheckReceivedMessage)
-  print("I am listening ...")
-  while 1:
-    time.sleep(10)
+
+def main():
+    bot.message_loop(check_received_message)
+    print("I am listening ...")
+    while 1:
+        time.sleep(10)
+
 
 repo = Repository()
-bot = telepot.Bot(utils.GetConfigValueWithKey('API_KEY'))
-Main()
+bot = telepot.Bot(utils.get_config_value_with_key('API_KEY'))
+main()
