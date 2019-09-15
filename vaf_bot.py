@@ -1,6 +1,8 @@
 #!/usr/bin/python
+
 # -*- coding: utf-8 -*-
 
+import json
 import os
 import time
 
@@ -12,6 +14,7 @@ from repository import Repository
 
 
 def check_received_message(new_message_data):
+    print(json.dumps(new_message_data, indent=4, sort_keys=True))
     message_text = utils.get_message_text(new_message_data)
     repo.insert(new_message_data)
 

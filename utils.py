@@ -45,10 +45,61 @@ def get_message_text(new_message_data):
     return new_message_data['text']
 
 
-def get_message_values(new_message_data):
+def get_message_values(new_message_data, private=True):
+    if private:
+        values = "("
+        values += "\""
+        values += new_message_data['chat']['first_name']
+        values += "\""
+        values += ", "
+        values += "\""
+        values += str(new_message_data['chat']['id'])
+        values += "\""
+        values += ", "
+        values += "\""
+        values += new_message_data['chat']['type']
+        values += "\""
+        values += ", "
+        values += "\""
+        values += new_message_data['chat']['username']
+        values += "\""
+        values += ", "
+        values += "\""
+        values += str(new_message_data['date'])
+        values += "\""
+        values += ", "
+        values += "\""
+        values += new_message_data['from']['first_name']
+        values += "\""
+        values += ", "
+        values += "\""
+        values += str(new_message_data['from']['id'])
+        values += "\""
+        values += ", "
+        values += "\""
+        values += str(new_message_data['from']['is_bot'])
+        values += "\""
+        values += ", "
+        values += "\""
+        values += new_message_data['from']['language_code']
+        values += "\""
+        values += ", "
+        values += "\""
+        values += new_message_data['from']['username']
+        values += "\""
+        values += ", "
+        values += "\""
+        values += str(new_message_data['message_id'])
+        values += "\""
+        values += ", "
+        values += "\""
+        values += new_message_data['text']
+        values += "\""
+        values += ")"
+        return values
     values = "("
     values += "\""
-    values += new_message_data['chat']['first_name']
+    values += str(new_message_data['chat']['all_members_are_administrators'])
     values += "\""
     values += ", "
     values += "\""
@@ -56,15 +107,27 @@ def get_message_values(new_message_data):
     values += "\""
     values += ", "
     values += "\""
+    values += new_message_data['chat']['title']
+    values += "\""
+    values += ", "
+    values += "\""
     values += new_message_data['chat']['type']
     values += "\""
     values += ", "
     values += "\""
-    values += new_message_data['chat']['username']
+    values += str(new_message_data['date'])
     values += "\""
     values += ", "
     values += "\""
-    values += str(new_message_data['date'])
+    values += str(new_message_data['entities'][0]['length'])
+    values += "\""
+    values += ", "
+    values += "\""
+    values += str(new_message_data['entities'][0]['offset'])
+    values += "\""
+    values += ", "
+    values += "\""
+    values += new_message_data['entities'][0]['type']
     values += "\""
     values += ", "
     values += "\""
@@ -96,6 +159,7 @@ def get_message_values(new_message_data):
     values += "\""
     values += ")"
     return values
+
 
 
 def starts_with(new_message_data, start):
