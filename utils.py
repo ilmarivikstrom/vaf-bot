@@ -5,6 +5,7 @@
 import ConfigParser
 import json
 import random
+import sys
 import urllib2
 
 version = "0.5"
@@ -96,7 +97,7 @@ def StartsWithSlash(newMessageData):
   else:
     return False
 
-def GetAPIKey():
+def GetConfigValueWithKey(key):
   config = ConfigParser.ConfigParser()
   config.read("vaf_bot.ini")
-  return config.get('Credentials', 'API_KEY')
+  return config.get('Credentials', key)

@@ -38,5 +38,5 @@ def Main():
     time.sleep(10)
 
 repo = Repository()
-bot = telepot.Bot(utils.GetAPIKey())
+bot = telepot.Bot(utils.GetConfigValueWithKey('API_KEY'))
 Main()
