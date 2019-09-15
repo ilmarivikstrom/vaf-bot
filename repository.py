@@ -9,18 +9,21 @@ import utils
 
 class Repository:
     def __init__(self):
-        config = ConfigParser.ConfigParser()
-        config.read("vaf_bot.ini")
+        self.config = ConfigParser.ConfigParser()
+        self.config.read("vaf_bot.ini")
 
+        self.Connect()
+
+    def Connect(self):
         self.db = mysql.connector.connect(
-            host=config.get('Credentials', 'DB_HOST'),
-            user=config.get('Credentials', 'DB_USER'),
-            passwd=config.get('Credentials', 'DB_PASS'),
-            database=config.get('Credentials', 'DB_NAME')
+            host=self.config.get('Credentials', 'DB_HOST'),
+            user=self.config.get('Credentials', 'DB_USER'),
+            passwd=self.config.get('Credentials', 'DB_PASS'),
+            database=self.config.get('Credentials', 'DB_NAME')
         )
 
-
     def insert(self, newMessageData):
+        self.Connect()
         print(json.dumps(newMessageData, indent=4, sort_keys=True))
         sql = "INSERT INTO received (chatfirst_name, chatid, chattype, chatusername, date, fromfirst_name, fromid, fromis_bot, fromlanguage_code, fromusername, message_id, text) VALUES " + utils.GetMessageValues(
             newMessageData)
