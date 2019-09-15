@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import os
 import time
 
 import telepot
@@ -14,8 +15,13 @@ def check_received_message(new_message_data):
     message_text = utils.get_message_text(new_message_data)
     repo.insert(new_message_data)
 
-    if utils.starts_with_slash(message_text):
-        chat_id = utils.get_chat_id(new_message_data)
+    chat_id = utils.get_chat_id(new_message_data)
+
+    if utils.starts_with(message_text, "/banter"):
+        send_audio(chat_id, message_text)
+
+    if utils.starts_with(message_text, "/"):
+
 
         if message_text == '/subit':
             send_message_with_styles(chat_id, cmds.subway())
@@ -31,6 +37,14 @@ def check_received_message(new_message_data):
 
 def send_message_with_styles(chat_id, message_to_be_sent):
     bot.sendMessage(chat_id, message_to_be_sent, "Markdown")
+
+
+def send_audio(chat_id, message_text):
+    reduced_message_text = message_text[len("/banter "):len(message_text)]
+    espeak_cmd = "espeak \"" + reduced_message_text + "\" -v fi -w res/wavi.wav"
+    os.system(espeak_cmd)
+
+    bot.sendAudio(chat_id, open('res/wavi.wav', 'rb'), title=reduced_message_text)
 
 
 def main():

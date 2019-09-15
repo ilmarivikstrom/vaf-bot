@@ -98,8 +98,8 @@ def get_message_values(new_message_data):
     return values
 
 
-def starts_with_slash(new_message_data):
-    if (new_message_data[0] == '/'):
+def starts_with(new_message_data, start):
+    if (new_message_data.startswith(start)):
         return True
     return False
 

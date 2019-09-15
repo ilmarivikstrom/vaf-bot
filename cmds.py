@@ -45,5 +45,6 @@ def help():
             "\n\n*Komennot:*\n/subit\tSubilista\n"
             "/inside\tInsideläppä\n"
             "/matti\tOppia profeetalta\n"
-            "/donald\tDon't stump the Trump\n\n"
+            "/donald\tDon't stump the Trump\n"
+            "/banter\tLäppä ei lopu\n\n"
             "GitHub repo\thttps://git.io/v7VKt")
