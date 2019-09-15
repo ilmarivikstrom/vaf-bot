@@ -6,4 +6,8 @@ You can use this bot as your own by creating a "vaf_bot.ini" YAML file to the ro
 ```
 [Credentials]
 API_KEY: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+DB_HOST: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+DB_USER: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+DB_PASS: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+DB_NAME: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
